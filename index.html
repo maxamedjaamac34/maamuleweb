@@ -10,8 +10,26 @@
 </head>
 <body>
 
-  <header class="hero">
-    <div class="cloth" aria-hidden="true"></div>
+  <header class="site-header">
+    <nav class="nav" aria-label="On this page">
+      <a class="nav-brand" href="#top">Maamuleschool</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+        <span class="nav-toggle-bars" aria-hidden="true"></span>
+        <span class="visually-hidden">Menu</span>
+      </button>
+      <div class="nav-links" id="nav-links">
+        <a href="#who">Who it is for</a>
+        <a href="#work">School work</a>
+        <a href="#money">Money</a>
+        <a href="#running">Running the school</a>
+        <a href="#start">Start a school</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+  <section class="hero" id="top">
     <div class="container hero-inner">
       <div class="logo-crop">
         <img src="logo.png" alt="" width="422" height="402">
@@ -20,7 +38,7 @@
       <p class="tagline">Simple school management for the Horn of Africa.</p>
       <p class="pill">Coming soon</p>
     </div>
-  </header>
+  </section>
 
   <section class="section intro-section">
     <div class="container narrow">
@@ -30,7 +48,7 @@
     </div>
   </section>
 
-  <section class="section" aria-labelledby="who-title">
+  <section class="section" id="who" aria-labelledby="who-title">
     <div class="container">
       <h2 id="who-title" class="section-title">Who it is for</h2>
       <div class="card-grid roles">
@@ -66,7 +84,7 @@
     </div>
   </section>
 
-  <section class="section band" aria-labelledby="work-title">
+  <section class="section band" id="work" aria-labelledby="work-title">
     <div class="container">
       <h2 id="work-title" class="section-title">Everyday school work</h2>
       <p class="section-lead">Each part opens only for the people who are allowed to use it.</p>
@@ -131,7 +149,7 @@
     </div>
   </section>
 
-  <section class="section" aria-labelledby="money-title">
+  <section class="section" id="money" aria-labelledby="money-title">
     <div class="container">
       <h2 id="money-title" class="section-title">School money</h2>
       <p class="section-lead">Fees, costs, and outside support, with a clear balance for each channel.</p>
@@ -174,7 +192,7 @@
     </div>
   </section>
 
-  <section class="section band" aria-labelledby="run-title">
+  <section class="section band" id="running" aria-labelledby="run-title">
     <div class="container">
       <h2 id="run-title" class="section-title">Running the school</h2>
       <div class="card-grid">
@@ -210,7 +228,7 @@
     </div>
   </section>
 
-  <section class="section" aria-labelledby="start-title">
+  <section class="section" id="start" aria-labelledby="start-title">
     <div class="container">
       <h2 id="start-title" class="section-title">Start a school</h2>
       <article class="card card-wide">
@@ -238,8 +256,7 @@
     </div>
   </section>
 
-  <section class="closing">
-    <div class="cloth" aria-hidden="true"></div>
+  <section class="closing" id="contact">
     <div class="container narrow">
       <h2>Not open yet</h2>
       <p>Maamuleschool is still being prepared. These parts are coming soon.</p>
@@ -252,6 +269,61 @@
       <p>Maamuleschool — Coming soon.</p>
     </div>
   </footer>
+  </main>
+
+  <script>
+    const nav = document.querySelector(".nav");
+    const navToggle = document.querySelector(".nav-toggle");
+    const navLinks = document.querySelectorAll(".nav-links a");
+
+    const setMenu = (open) => {
+      nav.classList.toggle("is-open", open);
+      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    };
+
+    navToggle.addEventListener("click", () => {
+      setMenu(!nav.classList.contains("is-open"));
+    });
+
+    navLinks.forEach((link) => {
+      link.addEventListener("click", () => setMenu(false));
+    });
+
+    document.querySelector(".nav-brand").addEventListener("click", () => setMenu(false));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setMenu(false);
+    });
+    const sections = [...navLinks]
+      .map((link) => document.querySelector(link.getAttribute("href")))
+      .filter(Boolean);
+
+    const markCurrent = (id) => {
+      navLinks.forEach((link) => {
+        const current = link.getAttribute("href") === "#" + id;
+        link.classList.toggle("is-current", current);
+        if (current) link.setAttribute("aria-current", "true");
+        else link.removeAttribute("aria-current");
+      });
+    };
+
+    const pickCurrent = () => {
+      const line = document.querySelector(".site-header").getBoundingClientRect().bottom + 24;
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8;
+      if (atBottom) {
+        markCurrent(sections[sections.length - 1].id);
+        return;
+      }
+      let current = null;
+      sections.forEach((section) => {
+        if (section.getBoundingClientRect().top <= line) current = section;
+      });
+      markCurrent(current ? current.id : "");
+    };
+
+    document.addEventListener("scroll", pickCurrent, { passive: true });
+    pickCurrent();
+  </script>
 
 </body>
 </html>
