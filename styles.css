@@ -266,6 +266,50 @@ h1 {
   font-weight: 600;
 }
 
+.cta-row {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.55rem 1rem;
+  border-radius: 12px;
+  font-weight: 650;
+  text-decoration: none;
+  border: 1px solid transparent;
+}
+
+.button-primary {
+  background: var(--blue);
+  color: var(--white);
+  border-color: var(--blue);
+}
+
+.button-primary:hover {
+  background: var(--blue-hover);
+  border-color: var(--blue-hover);
+  color: var(--white);
+}
+
+.button-secondary {
+  background: var(--white);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.button-secondary:hover {
+  color: var(--blue);
+  background: var(--blue-soft);
+  border-color: var(--blue-soft);
+}
+
 /* Sections */
 
 .section {
@@ -390,6 +434,27 @@ h1 {
   margin-top: 0.45rem;
 }
 
+.download-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1.35rem;
+}
+
+.store-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 0.2rem 0.75rem;
+  border-radius: 999px;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  color: #4B5563;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
 /* Closing */
 
 .closing {
@@ -478,6 +543,10 @@ h1 {
   .card-grid {
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
+  }
+
+  .download-grid {
+    grid-template-columns: 1fr 1fr;
   }
 
   .card-wide {
